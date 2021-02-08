@@ -8,8 +8,6 @@ import com.github.dsfb.locadorajavasqlite.tco.LocadoraTco;
 import com.github.dsfb.locadorajavasqlite.view.View;
 
 public class Control {
-	private ConnectionFactory factory = null;
-	private Connection connection = null;
 	private View view = null;
 	private int option;
 
@@ -18,9 +16,7 @@ public class Control {
 	}
 
 	public boolean start() {
-		factory = new ConnectionFactory(); 
 		try {
-			connection = factory.getConnection();
 			LocadoraTco.createTables();
 			return true;
 		} catch (SQLException e) {

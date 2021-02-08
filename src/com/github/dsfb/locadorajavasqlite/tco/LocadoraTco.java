@@ -7,11 +7,11 @@ import java.sql.Statement;
 
 // This is the "Table Creation Object" of this project, "Locadora".
 public class LocadoraTco {
-	public static void createTables() {
-		criaTabelaFilme();
+	public static void createTables(Connection conn) {
+		criaTabelaFilme(conn);
 	}
 	
-	public static void criaTabelaFilme() {
+	public static void criaTabelaFilme(Connection conn) {
         // SQLite connection string
         String url = "jdbc:sqlite:test.db";
         
@@ -23,7 +23,7 @@ public class LocadoraTco {
                 + "	preco real\n"
                 + ");";
         
-        try (Connection conn = DriverManager.getConnection(url);
+        try (conn);
                 Statement stmt = conn.createStatement()) {
             // create a new table
             stmt.execute(sql);

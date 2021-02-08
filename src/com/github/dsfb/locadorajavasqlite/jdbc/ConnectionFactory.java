@@ -1,15 +1,35 @@
 package com.github.dsfb.locadorajavasqlite.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionFactory {
-	public Connection getConnection() throws SQLException {
-		// db parameters
-		String url = "jdbc:sqlite:./test.db";
+import org.sqlite.SQLiteDataSource;
 
-		// create a connection to the database
-		return DriverManager.getConnection(url);
+// Source idea: JetBrains Academy! ;)
+public class ConnectionFactory {
+	private static final String url = "jdbc:sqlite:./test.db";
+	private SQLiteDataSource dataSource = null;
+
+	private static ConnectionFactory instance;
+	
+	private static synchronized ConnectionFactory getInstance() {
+		if (instance == null) {
+			instance = new ConnectionFactory();
+		}
+
+		return instance;
+	}
+	
+	private ConnectionFactory() {
+		dataSource = new SQLiteDataSource();
+		dataSource.setUrl(url);
+	}
+
+	private SQLiteDataSource getDataSource() {
+		return this.dataSource;
+	}
+	
+	public static Connection getConnection() throws SQLException {
+		return getInstance().getDataSource().getConnection();
 	}
 }
